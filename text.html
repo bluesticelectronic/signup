@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #edf3fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #e6f0fa;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      padding: 30px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .header {
+      background-color: #5a3fc0;
+      color: white;
+      padding: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #5a3fc0;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background-color: #472f9c;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+  </style>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAEugPCWlQb3WoOk_PPmdr439sFY0gWPGU",
+      authDomain: "thunes-investment.firebaseapp.com",
+      projectId: "thunes-investment",
+      storageBucket: "thunes-investment.firebasestorage.app",
+      messagingSenderId: "263770381335",
+      appId: "1:263770381335:web:7f01cd3adb127c9d9ad052"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.firebaseAuth = auth;
+    window.createUser = createUserWithEmailAndPassword;
+  </script>
+</head>
+<body>
+
+<h1>THUNES INVESTMENT</h1>
+
+<div class="container">
+  <form id="registerForm">
+    <div class="header">REGISTER ACCOUNT</div>
+    <input type="text" name="fullname" placeholder="Full Name" required />
+    <input type="text" name="username" placeholder="Username" required />
+    <input type="email" name="email" placeholder="Email Address" required />
+    <input type="tel" name="phone" placeholder="Phone Number" required />
+    
+    <select name="country" required>
+      <option value="" disabled selected>Select Country</option>
+      <option value="United States">United States</option>
+      <option value="United Kingdom">United Kingdom</option>
+      <option value="Canada">Canada</option>
+      <option value="Australia">Australia</option>
+      <option value="Nigeria">Nigeria</option>
+      <option value="India">India</option>
+    </select>
+
+    <input type="password" name="password" placeholder="Create Password" required />
+    <button type="submit">Create Account</button>
+    <p style="margin-top: 15px; font-size: 14px;">
+      Already have an account?
+      <a href="login.html" style="color: #5a3fc0; text-decoration: none; font-weight: bold;">Sign in</a>
+    </p>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById('registerForm');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const email = form.email.value;
+    const password = form.password.value;
+
+    try {
+      await window.createUser(window.firebaseAuth, email, password);
+      window.open('https://bluesticelectronic.github.io/sample/', '_blank');
+    } catch (error) {
+      console.error('Firebase Auth Error:', error);
+    }
+  });
+</script>
+
+</body>
+</html>
